@@ -56,13 +56,17 @@ const compare = (filepath1, filepath2) => {
 
   // организовываем вывод
   result.sort((a, b) => a.sort.localeCompare(b.sort));
-  console.log('{');
+  let stringResult = '';
+  stringResult += '{\n';
   for (const item of result) {
     for (const item2 of item.lines) {
-      console.log(`${item2[0]} ${item2[1]}`);
+      stringResult += `${item2[0]} ${item2[1]}\n`;
     }
   }
-  console.log('}');
+  stringResult += '}';
+  console.log(stringResult);
+
+  return stringResult;
 };
 
 export default compare;
