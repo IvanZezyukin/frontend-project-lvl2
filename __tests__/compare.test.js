@@ -10,5 +10,5 @@ const result = `{
 }`;
 
 test('first', () => {
-  expect(compare('../files/file1.json', '../files/file2.json')).toEqual(result);
+  expect(compare('./files/file1.json', './files/file2.json')).toEqual(result);
 });
