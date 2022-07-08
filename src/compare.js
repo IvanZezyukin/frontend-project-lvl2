@@ -1,20 +1,4 @@
-import path from "path";
-import {cwd} from "process";
-import fs from "fs";
-
-const compare = (filepath1, filepath2) => {
-  // формируем абсолютные пути к файлам
-  const absoluteFilepath1 = path.resolve(cwd(), filepath1);
-  const absoluteFilepath2 = path.resolve(cwd(), filepath2);
-  // пробуем читать файл
-  const file1 = fs.readFileSync(absoluteFilepath1, 'utf8');
-  const file2 = fs.readFileSync(absoluteFilepath2, 'utf8');
-  // пробуем распарсить файл
-  const parsedFile1 = JSON.parse(file1);
-  const parsedFile2 = JSON.parse(file2);
-
-  // дальше логика сравнения
-
+const compare = (parsedFile1, parsedFile2) => {
   const result = [];
 
   // ищем одинаковое

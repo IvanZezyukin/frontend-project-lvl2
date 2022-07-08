@@ -1,4 +1,4 @@
-import compare from '../src/compare.js';
+import index from '../src/index.js';
 
 const result = `{
   - follow: false
@@ -10,5 +10,5 @@ const result = `{
 }`;
 
 test('first', () => {
-  expect(compare('./files/file1.json', './files/file2.json')).toEqual(result);
+  expect(index('./files/file1.json', './files/file2.json')).toEqual(result);
 });

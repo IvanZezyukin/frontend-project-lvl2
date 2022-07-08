@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import compare from '../src/compare.js';
+import index from '../src/index.js';
 
 program
   .version('0.1')
@@ -9,7 +9,7 @@ program
   .arguments('<filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format <type>', 'output format')
-  .action(compare)
+  .action(index)
   .parse(process.argv);
 
 const options = program.opts();
