@@ -11,7 +11,8 @@ const index = (filepath1, filepath2) => {
   const parsedFile1 = parsers(absoluteFilepath1);
   const parsedFile2 = parsers(absoluteFilepath2);
   // сравниваем
-  compare(parsedFile1, parsedFile2);
+  const result = compare(parsedFile1, parsedFile2);
+  return result;
 };
 
 export default index;
