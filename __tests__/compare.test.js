@@ -13,3 +13,6 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 test('Flat json comparison', () => {
   expect(index(getFixturePath('file1.json'), getFixturePath('file2.json'))).toEqual(readFile('result.json'));
 });
+test('Flat yaml comparison', () => {
+  expect(index(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'))).toEqual(readFile('result.json'));
+});

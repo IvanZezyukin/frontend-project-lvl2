@@ -1,4 +1,5 @@
 import fs from 'fs';
+import yaml from 'js-yaml';
 
 const parsers = (absoluteFilepath) => {
   const file = fs.readFileSync(absoluteFilepath, 'utf8');
@@ -6,6 +7,9 @@ const parsers = (absoluteFilepath) => {
   let parsedFile;
   if (extension === 'json') {
     parsedFile = JSON.parse(file);
+  }
+  if (extension === 'yaml' || extension === 'yml') {
+    parsedFile = yaml.load(file);
   }
   return parsedFile;
 };
