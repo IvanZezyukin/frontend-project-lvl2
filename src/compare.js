@@ -1,56 +1,52 @@
-const compare = (parsedFile1, parsedFile2) => {
+const newDiff = (obj1, obj2) => {
   const result = [];
-
-  // ищем одинаковое
-  for (const item in parsedFile2) {
-    if (parsedFile2[item] === parsedFile1[item]) {
-      const obj = { sort: `${item[0]}`, lines: [] };
-      obj.lines.push(['   ', `${item}: ${parsedFile1[item]}`]);
-      result.push(obj);
+  Object.entries(obj1).map(([key, value]) => {
+    let prefix = '';
+    // логика для значения, внутри которого не объект
+    if (typeof value !== 'object' || value === null) {
+      // проверка, что есть точно такой же ключ и значение во втором объекте
+      if (key in obj2) {
+        if (value === obj2[key]) {
+          result.push({prefix: '    ', key: key, value: value});
+        } else {
+          // проверка что есть такой же ключ но значение по ключу не равно
+          result.push({prefix: '  - ', key: key, value: value});
+          // TODO разобраться с преобразованием в текст, тк падало на null
+          result.push({prefix: '  + ', key: key, value: String(obj2[key])});
+        }
+      }
+      // проверка, что ключ удален во втором объекте
+      if (!(key in obj2)) {
+        result.push({prefix: '  - ', key: key, value: value});
+      }
+    } else {
+      // ниже логика для значений, внутри которых содержится объект
+      if (key in obj2) {
+        if (typeof obj2[key] === 'object') {
+          result.push({prefix: '    ', key: key, value: newDiff(value, obj2[key])});
+        } else {
+          // что делаем если в первом объект, а во втором не объект
+          result.push({prefix: '  - ', key: key, value: newDiff(value, value)});
+          result.push({prefix: '  + ', key: key, value: obj2[key]});
+        }
+      }
+      // если ключ удален
+      if (!(key in obj2)) {
+        result.push({prefix: '  - ', key: key, value: newDiff(value, value)});
+      }
     }
-  }
-
-  // ищем измененные
-  for (const item in parsedFile2) {
-    if (item in parsedFile1 && parsedFile2[item] !== parsedFile1[item]) {
-      const obj = { sort: `${item[0]}`, lines: [] };
-      obj.lines.push(['  -', `${item}: ${parsedFile1[item]}`]);
-      obj.lines.push(['  +', `${item}: ${parsedFile2[item]}`]);
-      result.push(obj);
+  });
+  // проверка на новые ключи
+  Object.entries(obj2).map(([key, value]) => {
+    if (!(key in obj1)) {
+      if (typeof value === 'object') {
+        result.push({prefix: '  + ', key: key, value: newDiff(value, value)});
+      } else {
+        result.push({prefix: '  + ', key: key, value: value});
+      }
     }
-  }
-
-  // ищем добавленные
-  for (const item in parsedFile2) {
-    if (!(item in parsedFile1)) {
-      const obj = { sort: `${item[0]}`, lines: [] };
-      obj.lines.push(['  +', `${item}: ${parsedFile2[item]}`]);
-      result.push(obj);
-    }
-  }
-
-  // ищем удаленные
-  for (const item in parsedFile1) {
-    if (!(item in parsedFile2)) {
-      const obj = { sort: `${item[0]}`, lines: [] };
-      obj.lines.push(['  -', `${item}: ${parsedFile1[item]}`]);
-      result.push(obj);
-    }
-  }
-
-  // организовываем вывод
-  result.sort((a, b) => a.sort.localeCompare(b.sort));
-  let stringResult = '';
-  stringResult += '{\n';
-  for (const item of result) {
-    for (const item2 of item.lines) {
-      stringResult += `${item2[0]} ${item2[1]}\n`;
-    }
-  }
-  stringResult += '}';
-  console.log(stringResult);
-
-  return stringResult;
+  });
+  return result;
 };
 
-export default compare;
+export default newDiff;

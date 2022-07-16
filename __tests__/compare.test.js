@@ -16,3 +16,6 @@ test('Flat json comparison', () => {
 test('Flat yaml comparison', () => {
   expect(index(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'))).toEqual(readFile('result.json'));
 });
+test('Recursive json comparison', () => {
+  expect(index(getFixturePath('file2-1.json'), getFixturePath('file2-2.json'))).toEqual(readFile('result2'));
+});
