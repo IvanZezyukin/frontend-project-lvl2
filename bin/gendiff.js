@@ -9,7 +9,10 @@ program
   .arguments('<filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format <type>', 'output format')
-  .action(index)
+  .action((filepath1, filepath2) => {
+    const result = index(filepath1, filepath2);
+    console.log(result);
+  })
   .parse(process.argv);
 
 const options = program.opts();
