@@ -1,8 +1,9 @@
 const stylish = (arrOfDiff, spaces = 0) => {
   let result = '';
   result += '{\n';
+  // eslint-disable-next-line no-param-reassign
   arrOfDiff = arrOfDiff.sort((a, b) => a.key.localeCompare(b.key));
-  arrOfDiff.map(({prefix, key, value}) => {
+  arrOfDiff.forEach(({ prefix, key, value }) => {
     if (Array.isArray(value)) {
       const res = stylish(value, spaces + 1);
       result += `${'    '.repeat(spaces)}${prefix}${key}:${res === '' ? '' : ' '}${res}\n`;

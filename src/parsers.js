@@ -9,7 +9,7 @@ const parsers = (absoluteFilepath) => {
     parsedFile = JSON.parse(file);
   }
   if (extension === 'yaml' || extension === 'yml') {
-    parsedFile = yaml.load(file);
+    parsedFile = yaml.load(file, 'utf8');
   }
   return parsedFile;
 };
