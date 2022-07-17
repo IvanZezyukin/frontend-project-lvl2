@@ -18,3 +18,6 @@ test('Flat yaml comparison', () => {
 test('Recursive json comparison', () => {
   expect(index(getFixturePath('file2-1.json'), getFixturePath('file2-2.json'), 'stylish')).toEqual(readFile('result2'));
 });
+test('Plain format output', () => {
+  expect(index(getFixturePath('file2-1.json'), getFixturePath('file2-2.json'), 'plain')).toEqual(readFile('result-plain'));
+});
