@@ -1,4 +1,7 @@
 const plain = (compared, path = '') => {
+
+  /*
+  // ниже частично рабочий код не удалять!
   let result = '';
   compared = compared.sort((a, b) => a.key.localeCompare(b.key));
 
@@ -30,6 +33,11 @@ const plain = (compared, path = '') => {
   });
 
   return result;
+   */
+
+
+
+
 };
 
 export default plain;
