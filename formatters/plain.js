@@ -1,43 +1,20 @@
-const plain = (compared, path = '') => {
+import getValue from './getValue.js';
 
-  /*
-  // ниже частично рабочий код не удалять!
-  let result = '';
-  compared = compared.sort((a, b) => a.key.localeCompare(b.key));
-
-  compared.forEach((obj) => {
-    if (obj.prefix === '  - ') {
-      result += `- Property '${obj.key}' was removed\n`;
+const plain = (compared) => {
+  const filtred = compared.filter((obj) => obj.status === 'added' || obj.status === 'deleted' || obj.status === 'updated');
+  const result = [];
+  filtred.forEach((obj) => {
+    if (obj.status === 'added' && obj.parentSameStatus === false) {
+      result.push(`Property '${obj.path}' was added with value: ${getValue(obj.value)}`);
     }
-    if (obj.prefix === '  + ') {
-      result += `- Property '${obj.key}' was added with value: ${Array.isArray(obj.value) ? '[complex value]' : `'${obj.value}'\n`}`;
+    if (obj.status === 'deleted' && obj.parentSameStatus === false && obj.wasParentUpdated === false) {
+      result.push(`Property '${obj.path}' was removed`);
     }
-    if (obj.prefix === '    ') {
-      const getPath = ({ key, value }) => {
-        let res = '';
-        if (Array.isArray(value)) {
-          value.sort((a, b) => a.key.localeCompare(b.key)).forEach((obj) => {
-            res += key;
-            res += '.';
-            res += getPath(obj);
-          });
-        } else {
-          res += key;
-          res += '\n';
-        }
-        return res;
-      };
-      result += getPath(obj);
-      result += '\n';
+    if (obj.status === 'updated' && obj.parentSameStatus === false) {
+      result.push(`Property '${obj.path}' was updated. From ${getValue(obj.oldValue)} to ${getValue(obj.value)}`);
     }
   });
-
-  return result;
-   */
-
-
-
-
+  return result.join('\n');
 };
 
 export default plain;
