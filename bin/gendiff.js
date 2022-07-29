@@ -3,6 +3,8 @@
 import { program } from 'commander';
 import index from '../src/index.js';
 
+// node bin/gendiff.js -f json __fixtures__/file2-1.json __fixtures__/file2-2.json  to start
+
 program
   .version('0.1')
   .arguments('<filepath1>')
