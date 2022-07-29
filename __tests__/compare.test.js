@@ -10,14 +10,14 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 test('Flat json comparison', () => {
-  expect(index(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish')).toEqual(readFile('result.json'));
+  expect(index(getFixturePath('flat-file1.json'), getFixturePath('flat-file2.json'), 'stylish')).toEqual(readFile('flat-result.json'));
 });
 test('Flat yaml comparison', () => {
-  expect(index(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'stylish')).toEqual(readFile('result.json'));
+  expect(index(getFixturePath('flat-file1.yaml'), getFixturePath('flat-file2.yaml'), 'stylish')).toEqual(readFile('flat-result.json'));
 });
 test('Recursive json comparison', () => {
-  expect(index(getFixturePath('file2-1.json'), getFixturePath('file2-2.json'), 'stylish')).toEqual(readFile('result2'));
+  expect(index(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish')).toEqual(readFile('result_stylish.txt'));
 });
-test('Plain format output', () => {
-  expect(index(getFixturePath('file2-1.json'), getFixturePath('file2-2.json'), 'plain')).toEqual(readFile('result-plain'));
+test('Plain format output for yaml', () => {
+  expect(index(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'plain')).toEqual(readFile('result_plain.txt'));
 });
