@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const makeStructure = (obj1, obj2) => {
   const keys = Object.keys({ ...obj1, ...obj2 });
-  const sortedKeys = keys.sort((a, b) => a.localeCompare(b));
+  const sortedKeys = _.sortBy(keys);
   return sortedKeys.map((key) => {
     if (!(key in obj2)) {
       return { key, value: obj1[key], status: 'removed' };
