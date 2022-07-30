@@ -3,24 +3,23 @@ import _ from 'lodash';
 const makeStructure = (obj1, obj2) => {
   const keys = Object.keys({ ...obj1, ...obj2 });
   const sortedKeys = _.sortBy(keys);
-  const result = [];
-  sortedKeys.forEach((key) => {
+  return sortedKeys.map((key) => {
     if (!(key in obj2)) {
-      result.push({ key, value: obj1[key], status: 'removed' });
-    } else
+      return { key, value: obj1[key], status: 'removed' };
+    }
     if (!(key in obj1)) {
-      result.push({ key, value: obj2[key], status: 'added' });
-    } else
+      return { key, value: obj2[key], status: 'added' };
+    }
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-      result.push({ key, status: 'node', children: makeStructure(obj1[key], obj2[key]) });
-    } else
+      return { key, status: 'node', children: makeStructure(obj1[key], obj2[key]) };
+    }
     if (!_.isEqual(obj1[key], obj2[key])) {
-      result.push({
+      return {
         key, value: obj2[key], oldValue: obj1[key], status: 'updated',
-      });
-    } else { result.push({ key, value: obj1[key], status: 'same' }); }
+      };
+    }
+    return { key, value: obj1[key], status: 'same' };
   });
-  return result;
 };
 
 export default makeStructure;
